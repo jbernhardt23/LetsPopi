@@ -2,7 +2,8 @@ package com.example.josebernhardt.letspopi;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,143 +15,94 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import butterknife.BindView;
+
 import butterknife.ButterKnife;
+
 import com.example.josebernhardt.letspopi.Adapters.PlacesAdapter;
-import com.example.josebernhardt.letspopi.POJOs.Places;
+import com.example.josebernhardt.letspopi.POJOs.Place;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-    implements NavigationView.OnNavigationItemSelectedListener {
+        implements TabLayout.OnTabSelectedListener {
 
 
-  RecyclerView recyclerView;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-    recyclerView  = (RecyclerView) findViewById(R.id.places_cardList);
-    setSupportActionBar(toolbar);
-    ButterKnife.bind(this);
-
-    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-    fab.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        setSupportActionBar(toolbar);
 
 
-      }
-    });
+        ButterKnife.bind(this);
 
-    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-    ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-        this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-    drawer.setDrawerListener(toggle);
-    toggle.syncState();
+        tabLayout.addTab(tabLayout.newTab().setText("Bars"));
+        tabLayout.addTab(tabLayout.newTab().setText("Restaurants"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-    NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-    navigationView.setNavigationItemSelectedListener(this);
+        Pager adapter = new Pager(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
+        tabLayout.setOnTabSelectedListener(this);
 
-    List<Places> barList = new ArrayList<>();
-
-    barList.add(new Places("eMe by Markecito", "Av. Gustavo Mejia Ricart #92, Piantini, Santo Domingo",
-        "(809) 541-7878","Viernes - Sábado 5:00 p.m. - 2:00 a.m","Tapas" , R.drawable.eme));
+    /*    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
 
-    barList.add(new Places("Camden", "Gustavo Mejía Ricart No. 83, Plaza Andalucía I, Piantini, local 1-B",
-        "(809) 540-3588","Viernes - Sábado 5:00 p.m. - 2:00 a.m","Bar", R.drawable.camdem));
-
-    barList.add(new Places("BeerMarket", "C/Isabel La Católica Esq. Padre Billini\n"
-        + "Santo Domingo, Dominican Republic 10211",
-        "(849) 245-4094","Viernes - Sábado 4:00 p.m. - 2:00 a.m","Bar",R.drawable.beer_market ));
-
-    barList.add(new Places("Local 3", "Calle Max Henriquez Ureña 33, Santo Domingo",
-        "(849) 258-9133","Viernes - Sábado 5:00 p.m. - 2:00 a.m","Tapas-Bar", R.drawable.local_3 ));
-  /*
-    barList.add(new Places("eMe by Markecito", "Av. Gustavo Mejia Ricart #92, Piantini, Santo Domingo",
-        "(809) 541-7878","Viernes - Sábado 5:00 p.m. - 2:00 a.m","Tapas" ));
-    barList.add(new Places("eMe by Markecito", "Av. Gustavo Mejia Ricart #92, Piantini, Santo Domingo",
-        "(809) 541-7878","Viernes - Sábado 5:00 p.m. - 2:00 a.m","Tapas" ));
-    barList.add(new Places("eMe by Markecito", "Av. Gustavo Mejia Ricart #92, Piantini, Santo Domingo",
-        "(809) 541-7878","Viernes - Sábado 5:00 p.m. - 2:00 a.m","Tapas" ));
-    barList.add(new Places("eMe by Markecito", "Av. Gustavo Mejia Ricart #92, Piantini, Santo Domingo",
-        "(809) 541-7878","Viernes - Sábado 5:00 p.m. - 2:00 a.m","Tapas" ));
-    barList.add(new Places("eMe by Markecito", "Av. Gustavo Mejia Ricart #92, Piantini, Santo Domingo",
-        "(809) 541-7878","Viernes - Sábado 5:00 p.m. - 2:00 a.m","Tapas" ));
-    barList.add(new Places("eMe by Markecito", "Av. Gustavo Mejia Ricart #92, Piantini, Santo Domingo",
-        "(809) 541-7878","Viernes - Sábado 5:00 p.m. - 2:00 a.m","Tapas" ));
+            }
+        });
 */
 
 
-
-    recyclerView.setHasFixedSize(true);
-    GridLayoutManager lLayout = new GridLayoutManager(MainActivity.this, 1);
-    recyclerView.setLayoutManager(lLayout);
-
-    PlacesAdapter adapter = new PlacesAdapter(barList,this);
-    recyclerView.setAdapter(adapter);
-    recyclerView.setNestedScrollingEnabled(false);
-
-  }
-
-  @Override
-  public void onBackPressed() {
-    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-    if (drawer.isDrawerOpen(GravityCompat.START)) {
-      drawer.closeDrawer(GravityCompat.START);
-    } else {
-      super.onBackPressed();
-    }
-  }
-
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    // Inflate the menu; this adds items to the action bar if it is present.
-    getMenuInflater().inflate(R.menu.main, menu);
-    return true;
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    // Handle action bar item clicks here. The action bar will
-    // automatically handle clicks on the Home/Up button, so long
-    // as you specify a parent activity in AndroidManifest.xml.
-    int id = item.getItemId();
-
-    //noinspection SimplifiableIfStatement
-    if (id == R.id.action_settings) {
-      return true;
     }
 
-    return super.onOptionsItemSelected(item);
-  }
 
-  @SuppressWarnings("StatementWithEmptyBody")
-  @Override
-  public boolean onNavigationItemSelected(MenuItem item) {
-    // Handle navigation view item clicks here.
-    int id = item.getItemId();
 
-    if (id == R.id.nav_camera) {
-      // Handle the camera action
-    } else if (id == R.id.nav_gallery) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
 
-    } else if (id == R.id.nav_slideshow) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
-    } else if (id == R.id.nav_manage) {
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
 
-    } else if (id == R.id.nav_share) {
+        return super.onOptionsItemSelected(item);
+    }
 
-    } else if (id == R.id.nav_send) {
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        viewPager.setCurrentItem(tab.getPosition());
 
     }
 
-    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-    drawer.closeDrawer(GravityCompat.START);
-    return true;
-  }
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
+    }
+
+
 }

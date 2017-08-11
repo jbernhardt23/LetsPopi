@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.example.josebernhardt.letspopi.Adapters.PlacesAdapter.PlacesHolder;
-import com.example.josebernhardt.letspopi.POJOs.Places;
+
+import com.example.josebernhardt.letspopi.POJOs.Place;
 import com.example.josebernhardt.letspopi.R;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +22,11 @@ import java.util.List;
 public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlacesHolder>{
 
 
-  private List<Places> placesList = new ArrayList<>();
+  private List<Place> placeList = new ArrayList<>();
   private Context mContext;
 
-  public PlacesAdapter(List<Places> placesList, Context mContext) {
-    this.placesList = placesList;
+  public PlacesAdapter(List<Place> placeList, Context mContext) {
+    this.placeList = placeList;
     this.mContext = mContext;
   }
 
@@ -40,19 +40,19 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlacesHold
   @Override
   public void onBindViewHolder(PlacesHolder holder, int position) {
 
-    holder.placeName.setText(placesList.get(position).getName());
-    holder.placeType.setText(placesList.get(position).getType());
-    holder.placeAddress.setText(placesList.get(position).getAddress());
-    holder.placeHours.setText(placesList.get(position).getBusinnessHours());
-    holder.placePhone.setText(placesList.get(position).getPhoneNumber());
-    holder.placeImage.setImageResource(placesList.get(position).getPic());
+    holder.placeName.setText(placeList.get(position).getName());
+    holder.placeType.setText(placeList.get(position).getType());
+    holder.placeAddress.setText(placeList.get(position).getAddress());
+    holder.placeHours.setText(placeList.get(position).getBusinnessHours());
+    holder.placePhone.setText(placeList.get(position).getPhoneNumber());
+    holder.placeImage.setImageResource(placeList.get(position).getPic());
 
 
   }
 
   @Override
   public int getItemCount() {
-    return placesList.size();
+    return placeList.size();
   }
 
   // Provides a reference to the views for each data item

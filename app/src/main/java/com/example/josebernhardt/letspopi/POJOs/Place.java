@@ -6,13 +6,13 @@ import android.widget.ImageView;
  * Created by Jose Bernhardt on 8/10/2017.
  */
 
-public class Places {
+public class Place {
 
   private String name, address, phoneNumber, businnessHours, type;
   private int pic;
 
-  public Places(String name, String address,  String phoneNumber,
-      String businnessHours, String type, int pic) {
+  public Place(String name, String address, String phoneNumber,
+               String businnessHours, String type, int pic) {
     this.name = name;
     this.address = address;
     this.phoneNumber = phoneNumber;

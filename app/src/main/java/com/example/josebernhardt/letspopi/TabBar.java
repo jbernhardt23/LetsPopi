@@ -2,6 +2,9 @@ package com.example.josebernhardt.letspopi;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -76,7 +79,7 @@ public class TabBar extends Fragment {
 
                 Random ran = new Random();
                 int ranNumb = ran.nextInt(barList.size());
-                Place currentPlace = barList.get(ranNumb);
+                final Place currentPlace = barList.get(ranNumb);
 
                 AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
                 LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -91,7 +94,14 @@ public class TabBar extends Fragment {
 
                 dialog.setCancelable(false);
                 dialog.setMessage("Lets Popi to:");
-                dialog.setPositiveButton("Go!", null);
+                dialog.setPositiveButton("Go!", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(
+                                "http://maps.google.co.in/maps?q=" +currentPlace.getAddress()));
+                        startActivity(i);
+                    }
+                });
+
                 dialog.setView(dialogView);
                 Dialog  b = dialog.create();
                 b.show();

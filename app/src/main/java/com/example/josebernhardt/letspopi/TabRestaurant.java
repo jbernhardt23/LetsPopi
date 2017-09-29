@@ -54,6 +54,10 @@ public class TabRestaurant extends Fragment {
         restaurantList.add(new Place("Tony Roma's", "Av. Sarasota No. 29, Bella Vista, Santo Domingo",
                 "(809) 535-5454", "Viernes - Sábado 11:00 a.m. - 12:00 a.m.", "Carnes", R.drawable.tony_romas));
 
+        restaurantList.add(new Place("Laurel Food", "Andrés Julio Aybar #16, Piantini, Santo Domingo",
+                "(809) 908-0200", "Viernes - Sábado 12:00 p.m. - 1:00 a.m", "Internacional", R.drawable.laurel));
+
+
         restaurantList.add(new Place("Santoña Colonial", " Calle Arzobispo Meriño 310-B, Zona Colonial, Santo Domingo",
                 "(809) 794-5207", "Viernes - Sábado 6:00 p.m. - 2:00 a.m", "Tapas", R.drawable.santona_colonial));
 
@@ -86,7 +90,7 @@ public class TabRestaurant extends Fragment {
 
                 Random ran = new Random();
                 int ranNumb = ran.nextInt(restaurantList.size());
-                final Place currentPlace = restaurantList.get(ranNumb);
+                final Place currentPlace = restaurantList.get(5);
 
                 AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
                 LayoutInflater inflater = getActivity().getLayoutInflater();
